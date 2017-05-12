@@ -29,46 +29,32 @@ public class Text extends Figure {
 		this.text = text;
 	}
 
-	// style properties
-	private Font font;
-
-	private Color color;
-
-	public void setFont(Font font) {
-		this.font = font;
-	}
-
-	public void setSize(double size) {
-		this.font = this.font.deriveFont((float) size * getScale());
-	}
-
 	public Text(String text, Point pos, Font font, double size, Color color) {
+		super(new Style(color, font, size));
+
 		this.text = text;
-
 		this.pos = pos;
-
-		this.font = font;
-		setSize(size);
-
-		this.color = color;
 	}
 
 	public Text(String text, Point pos, Font font, Color color) {
+		super(new Style(color, font));
+
 		this.text = text;
-
 		this.pos = pos;
-
-		this.font = font.deriveFont((float) (font.getSize() * getScale()));
-
-		this.color = color;
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setFont(font);
-		g.setColor(color);
+		g.setFont(getStyle().getFont().deriveFont(getStyle().getFont().getSize() * getScale()));
+		g.setColor(getStyle().getBgClr());
 
 		g.drawString(text, (int) pos.getX() * getScale(), (int) pos.getY() * getScale());
+	}
+
+	@Override
+	public boolean isPointInFigureBounds(Point p) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

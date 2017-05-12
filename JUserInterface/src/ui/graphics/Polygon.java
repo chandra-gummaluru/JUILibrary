@@ -31,10 +31,10 @@ public class Polygon extends Shape {
 			ypts[i] = (int) points[i].getY() * getScale();
 		}
 
-		g.setColor(this.getBgClr());
+		g.setColor(this.getStyle().getBgClr());
 		g.fillPolygon(xpts, ypts, points.length);
 
-		g.setColor(this.getFgClr());
+		g.setColor(this.getStyle().getFgClr());
 		g.drawPolygon(xpts, ypts, points.length);
 	}
 
@@ -65,5 +65,11 @@ public class Polygon extends Shape {
 		}
 
 		return p2 - p1;
+	}
+
+	@Override
+	public boolean isPointInFigureBounds(Point p) {
+		// TODO Code the logic.
+		return false;
 	}
 }

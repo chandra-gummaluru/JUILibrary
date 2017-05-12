@@ -29,6 +29,7 @@ public class Image extends Figure {
 	}
 
 	public Image(BufferedImage img, Point pos) {
+		super(null);
 		this.image = img;
 		this.pos = pos;
 	}
@@ -36,6 +37,12 @@ public class Image extends Figure {
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.image, (int) pos.getX() * getScale(), (int) pos.getY() * getScale(), null);
+	}
+
+	@Override
+	public boolean isPointInFigureBounds(Point p) {
+		return (p.getX() >= pos.getX() && p.getX() <= pos.getX() + image.getWidth())
+				&& (p.getY() >= pos.getY() && p.getY() <= pos.getY() + image.getHeight());
 	}
 
 }

@@ -1,6 +1,8 @@
 package ui.space;
 
-public class Point {
+import handlers.res.Instantiatable;
+
+public class Point implements Instantiatable {
 
 	private double x, y;
 
@@ -37,6 +39,15 @@ public class Point {
 
 	public String toString() {
 		return "(" + this.getX() + "," + this.getY() + ")";
+	}
+
+	@Override
+	public void instantiate(String src) {
+		// separate the data.
+		String[] data = src.split(",");
+
+		this.x = Double.parseDouble(data[0]);
+		this.y = Double.parseDouble(data[1]);
 	}
 
 }

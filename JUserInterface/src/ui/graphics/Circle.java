@@ -23,11 +23,13 @@ public class Circle extends Shape {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(getBgClr());
-		g.fillOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(), radius, radius);
+		g.setColor(this.getStyle().getBgClr());
+		g.fillOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(),
+				radius * getScale(), radius * getScale());
 
-		g.setColor(getFgClr());
-		g.drawOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(), radius, radius);
+		g.setColor(this.getStyle().getFgClr());
+		g.drawOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(),
+				radius * getScale(), radius * getScale());
 	}
 
 	public boolean isIntersecting(Circle c) {
@@ -42,5 +44,18 @@ public class Circle extends Shape {
 	@Override
 	public double getProjection(Vector axis) {
 		return 2 * this.radius;
+	}
+
+	@Override
+	public boolean isPointInFigureBounds(Point p) {
+		double dx = p.getX() - this.getCentroid().getX();
+		double dy = p.getY() - this.getCentroid().getY();
+
+		/*
+		 * A point is in the circle if the square distance to the point and the
+		 * centroid of the circle is less than or equal to the square of the
+		 * radius.
+		 */
+		return (dx * dx) * (dy * dy) <= this.getRadius() * this.getRadius();
 	}
 }

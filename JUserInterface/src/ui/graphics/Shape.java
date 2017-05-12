@@ -22,36 +22,6 @@ public abstract class Shape extends Figure {
 	 */
 	private Point centroid;
 
-	// visual properties
-
-	/**
-	 * The background color of {@code this Figure}.
-	 */
-	private Color bgClr;
-
-	/**
-	 * The foreground color of {@code this Figure}.
-	 */
-	private Color fgClr;
-
-	/**
-	 * Gets the background color of {@code this Figure}.
-	 * 
-	 * @return bgClr
-	 */
-	public Color getBgClr() {
-		return this.bgClr;
-	}
-
-	/**
-	 * Gets the foreground color of {@code this Figure}.
-	 * 
-	 * @return fgClr
-	 */
-	public Color getFgClr() {
-		return this.fgClr;
-	}
-
 	/**
 	 * Constructs a {@code new Shape} using the specified fields. The centroid
 	 * is determined using the specified set of points.
@@ -64,8 +34,7 @@ public abstract class Shape extends Figure {
 	 *            the foreground color.
 	 */
 	public Shape(Point[] points, Color bgClr, Color fgClr) {
-		this.bgClr = bgClr;
-		this.fgClr = fgClr;
+		super(new Style(bgClr, fgClr));
 
 		// set the centroid.
 		this.centroid = getCentroid(points);
@@ -83,8 +52,7 @@ public abstract class Shape extends Figure {
 	 *            the foreground color.
 	 */
 	public Shape(Point centroid, Color bgClr, Color fgClr) {
-		this.bgClr = bgClr;
-		this.fgClr = fgClr;
+		super(new Style(bgClr, fgClr));
 
 		// set the centroid.
 		this.centroid = centroid;
