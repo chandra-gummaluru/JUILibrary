@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import ui.space.Point;
 
-public class Text implements Drawable {
+public class Text extends Figure {
 
 	// geometric properties
 	private Point pos;
@@ -31,8 +31,6 @@ public class Text implements Drawable {
 
 	// style properties
 	private Font font;
-	@SuppressWarnings("unused")
-	private double size;
 
 	private Color color;
 
@@ -41,7 +39,18 @@ public class Text implements Drawable {
 	}
 
 	public void setSize(double size) {
-		this.size = size;
+		this.font = this.font.deriveFont((float) size * getScale());
+	}
+
+	public Text(String text, Point pos, Font font, double size, Color color) {
+		this.text = text;
+
+		this.pos = pos;
+
+		this.font = font;
+		setSize(size);
+
+		this.color = color;
 	}
 
 	public Text(String text, Point pos, Font font, Color color) {
@@ -49,7 +58,8 @@ public class Text implements Drawable {
 
 		this.pos = pos;
 
-		this.font = font;
+		this.font = font.deriveFont((float) (font.getSize() * getScale()));
+
 		this.color = color;
 	}
 
@@ -58,7 +68,7 @@ public class Text implements Drawable {
 		g.setFont(font);
 		g.setColor(color);
 
-		g.drawString(text, (int) pos.getX(), (int) pos.getY());
+		g.drawString(text, (int) pos.getX() * getScale(), (int) pos.getY() * getScale());
 	}
 
 }

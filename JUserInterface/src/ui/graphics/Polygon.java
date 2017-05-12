@@ -15,18 +15,8 @@ public class Polygon extends Shape {
 		return this.points;
 	}
 
-	@Override
-	public void setPos(Point pos) {
-		Vector shift = Vector.getPositionVector(pos, getPos());
-
-		getPos().translate(shift);
-		for (Point p : points) {
-			p.translate(shift);
-		}
-	}
-
-	public Polygon(Point pos, Point[] points, Color bgClr, Color fgClr) {
-		super(pos, bgClr, fgClr);
+	public Polygon(Point[] points, Color bgClr, Color fgClr) {
+		super(points, bgClr, fgClr);
 
 		this.points = points;
 	}
@@ -37,11 +27,15 @@ public class Polygon extends Shape {
 		int[] ypts = new int[points.length];
 
 		for (int i = 0; i < points.length; i++) {
-			xpts[i] = (int) points[i].getX();
-			ypts[i] = (int) points[i].getY();
+			xpts[i] = (int) points[i].getX() * getScale();
+			ypts[i] = (int) points[i].getY() * getScale();
 		}
 
+		g.setColor(this.getBgClr());
 		g.fillPolygon(xpts, ypts, points.length);
+
+		g.setColor(this.getFgClr());
+		g.drawPolygon(xpts, ypts, points.length);
 	}
 
 	@Override
@@ -55,8 +49,6 @@ public class Polygon extends Shape {
 	}
 
 	public double getProjection(Vector v) {
-		double[] projections = new double[points.length];
-
 		double p1 = 0;
 		double p2 = 0;
 

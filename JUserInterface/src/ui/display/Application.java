@@ -55,7 +55,7 @@ public class Application implements Tickable {
 		inputHldr = new InputHandler();
 
 		// construct the window.
-		this.window = new Window(name, size, scalability);
+		this.window = new Window(name, size, scalability, Color.WHITE);
 
 		// add the required listeners to the window.
 		this.window.addKeyListener(inputHldr);
@@ -92,9 +92,9 @@ public class Application implements Tickable {
 		stateHdlr.draw(window.getBufferedGraphics());
 
 		if (displayFPS) {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.setFont(new Font("Arial", Font.PLAIN, 14));
-			g.drawString(df.format(loop.getFPS()) + " FPS", 9, 18);
+			g.drawString(df.format(loop.getFPS()) + " FPS", 9, 832);
 		}
 
 		// draw the back buffer to the window.

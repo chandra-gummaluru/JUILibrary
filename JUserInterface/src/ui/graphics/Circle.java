@@ -15,11 +15,6 @@ public class Circle extends Shape {
 		return this.radius;
 	}
 
-	@Override
-	public void setPos(Point pos) {
-		getPos().set(pos);
-	}
-
 	public Circle(Point pos, int radius, Color bgColor, Color fgColor) {
 		super(pos, bgColor, fgColor);
 
@@ -29,11 +24,14 @@ public class Circle extends Shape {
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(getBgClr());
-		g.fillOval((int) getPos().getX() * getScale(), (int) getPos().getY() * getScale(), radius, radius);
+		g.fillOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(), radius, radius);
+
+		g.setColor(getFgClr());
+		g.drawOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(), radius, radius);
 	}
 
 	public boolean isIntersecting(Circle c) {
-		return this.radius + c.radius <= Vector.getPositionVector(c.getPos(), this.getPos()).getLength();
+		return this.radius + c.radius <= Vector.getPositionVector(c.getCentroid(), this.getCentroid()).getLength();
 	}
 
 	@Override
