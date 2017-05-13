@@ -9,17 +9,22 @@ import ui.graphics.Drawable;
 
 public abstract class State implements Tickable, InputHandling, Drawable {
 
+	/**
+	 * The scale associated with {@code this State}.
+	 */
+	private final int scale;
+
 	// handlers
 	private ResourceHandler resHdlr;
 	private AudioHandler audioHdlr;
 	private PhysicsHandler physicsHdlr;
 
-	public State(String src) {
+	public State(String src, int scale) {
+		this.scale = scale;
 
 		resHdlr = new ResourceHandler(src);
 		audioHdlr = new AudioHandler();
 		physicsHdlr = new PhysicsHandler();
-
 	}
 
 	public ResourceHandler getResourceHandler() {
@@ -32,5 +37,9 @@ public abstract class State implements Tickable, InputHandling, Drawable {
 
 	public PhysicsHandler getPhysicsHandler() {
 		return this.physicsHdlr;
+	}
+
+	public int getScale() {
+		return this.scale;
 	}
 }

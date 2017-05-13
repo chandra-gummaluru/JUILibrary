@@ -14,8 +14,7 @@ public class Window extends JPanel {
 
 	private static final long serialVersionUID = 813013971973045054L;
 
-	public static enum Scalability
-	{
+	public static enum Scalability {
 		FIXED, MAXIMIZED;
 	}
 
@@ -41,7 +40,7 @@ public class Window extends JPanel {
 		frame.pack();
 
 		if (scalability == Scalability.MAXIMIZED) {
-			this.SCALE = getPreferredScale();
+			SCALE = getPreferredScale();
 			this.setPreferredSize(new Dimension((int) (size.getWidth() * SCALE), (int) (size.getHeight() * SCALE)));
 
 			frame.pack();
@@ -115,12 +114,12 @@ public class Window extends JPanel {
 	public JFrame getFrame() {
 		return this.frame;
 	}
-	
+
 	@Override
 	public void setVisible(boolean visibility) {
 		super.setVisible(visibility);
 		frame.setVisible(visibility);
-		
+
 	}
 
 	public Graphics2D getBufferedGraphics() {

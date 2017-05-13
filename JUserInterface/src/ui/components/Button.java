@@ -2,46 +2,42 @@ package ui.components;
 
 import java.awt.Graphics2D;
 
-import ui.graphics.Figure;
-import ui.graphics.Style;
-import ui.space.Point;
+import handlers.input.InputHandler;
+import ui.graphics.Shape;
+import ui.graphics.Text;
+import ui.style.ColorStyle;
 
-public class Button<T extends Figure> extends Figure {
+public class Button extends Component {
 
-	private Figure figure;
+	private Shape shape;
+	private ColorStyle defaultStyle, hoverStyle, downStyle;
 
-	private Style dflt, hvr, dwn;
+	@SuppressWarnings("unused")
+	private Text text;
 
-	public Button(T figure, Style dflt, Style hvr, Style dwn) {
-		super(dflt);
+	public Button(Shape shape, ColorStyle defaultStyle, ColorStyle hoverStyle, ColorStyle downStyle) {
+		this.shape = shape;
 
-		this.dflt = dflt;
-		this.hvr = hvr;
-		this.dwn = dwn;
-
-		this.figure = figure;
-	}
-
-	public void setDflt() {
-		this.figure.setStyle(dflt);
-	}
-
-	public void setHvr() {
-		this.figure.setStyle(hvr);
-	}
-
-	public void setDwn() {
-		this.figure.setStyle(dwn);
+		this.defaultStyle = defaultStyle;
+		this.hoverStyle = hoverStyle;
+		this.downStyle = downStyle;
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		this.figure.draw(g);
+		this.shape.draw(g);
 	}
 
 	@Override
-	public boolean isPointInFigureBounds(Point p) {
-		return this.figure.isPointInFigureBounds(p);
+	public void handleInput(InputHandler m) {
+		if (this.shape.isPointInBounds(m.getPointerPosition())) {
+			if (m.isPointerDown()) {
+				this.shape.setClrStyle(downStyle);
+			} else {
+				this.shape.setClrStyle(hoverStyle);
+			}
+		} else {
+			this.shape.setClrStyle(defaultStyle);
+		}
 	}
-
 }

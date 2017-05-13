@@ -16,7 +16,7 @@ public class StateHandler implements Tickable, InputHandling, Drawable {
 	}
 
 	public StateHandler(State defaultState) {
-		currentState = defaultState;
+		setState(defaultState);
 	}
 
 	public void setState(State newState) {

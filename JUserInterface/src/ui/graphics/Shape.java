@@ -1,19 +1,18 @@
 package ui.graphics;
 
-import java.awt.Color;
-
 import ui.space.Point;
 import ui.space.Vector;
+import ui.style.ColorStyle;
 
 /**
- * A {@code Shape} is a type of {@code Figure} that contains a centroid and can
- * determine whether it is intersecting with other shapes.
+ * A {@code Shape} is a type of {@code Scalable} that contains a centroid and
+ * can determine whether it is intersecting with other shapes.
  * 
  * @author Chandra Gummaluru
- * @version 1.1
+ * @version 1.2
  *
  */
-public abstract class Shape extends Figure {
+public abstract class Shape extends Scalable {
 
 	// geometric properties
 
@@ -22,21 +21,32 @@ public abstract class Shape extends Figure {
 	 */
 	private Point centroid;
 
+	// style
+	private ColorStyle clrStyle;
+
+	public ColorStyle getClrStyle() {
+		return this.clrStyle;
+	}
+
+	public void setClrStyle(ColorStyle clrStyle) {
+		this.clrStyle = clrStyle;
+	}
+
 	/**
 	 * Constructs a {@code new Shape} using the specified fields. The centroid
 	 * is determined using the specified set of points.
 	 * 
 	 * @param points
-	 *            a set of points
-	 * @param bgClr
-	 *            the background color.
-	 * @param fgClr
-	 *            the foreground color.
+	 *            a set of points.
+	 * @param clrStyle
+	 *            the color style.
+	 * @param scale
+	 *            the scale factor.
 	 */
-	public Shape(Point[] points, Color bgClr, Color fgClr) {
-		super(new Style(bgClr, fgClr));
+	public Shape(Point[] points, ColorStyle clrStyle, int scale) {
+		super(scale);
 
-		// set the centroid.
+		setClrStyle(clrStyle);
 		this.centroid = getCentroid(points);
 	}
 
@@ -46,15 +56,15 @@ public abstract class Shape extends Figure {
 	 * 
 	 * @param centroid
 	 *            the centroid.
-	 * @param bgClr
-	 *            the background color.
-	 * @param fgClr
-	 *            the foreground color.
+	 * @param clrStyle
+	 *            the color style.
+	 * @param scale
+	 *            the scale factor.
 	 */
-	public Shape(Point centroid, Color bgClr, Color fgClr) {
-		super(new Style(bgClr, fgClr));
+	public Shape(Point centroid, ColorStyle clrStyle, int scale) {
+		super(scale);
 
-		// set the centroid.
+		setClrStyle(clrStyle);
 		this.centroid = centroid;
 	}
 

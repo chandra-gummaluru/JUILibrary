@@ -1,10 +1,10 @@
 package ui.graphics;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ui.space.Point;
 import ui.space.Vector;
+import ui.style.ColorStyle;
 
 public class Polygon extends Shape {
 
@@ -15,8 +15,8 @@ public class Polygon extends Shape {
 		return this.points;
 	}
 
-	public Polygon(Point[] points, Color bgClr, Color fgClr) {
-		super(points, bgClr, fgClr);
+	public Polygon(Point[] points, ColorStyle clrStyle, int scale) {
+		super(points, clrStyle, scale);
 
 		this.points = points;
 	}
@@ -31,10 +31,10 @@ public class Polygon extends Shape {
 			ypts[i] = (int) points[i].getY() * getScale();
 		}
 
-		g.setColor(this.getStyle().getBgClr());
+		g.setColor(this.getClrStyle().getBgClr());
 		g.fillPolygon(xpts, ypts, points.length);
 
-		g.setColor(this.getStyle().getFgClr());
+		g.setColor(this.getClrStyle().getFgClr());
 		g.drawPolygon(xpts, ypts, points.length);
 	}
 
@@ -68,8 +68,17 @@ public class Polygon extends Shape {
 	}
 
 	@Override
-	public boolean isPointInFigureBounds(Point p) {
-		// TODO Code the logic.
-		return false;
+	public boolean isPointInBounds(Point p) {
+		int i, j;
+		boolean intersecting = false;
+
+		for (i = 0, j = this.points.length - 1; i < this.points.length - 1; j = i++) {
+			if (((points[i].getY() > p.getY()) != (points[j].getY() > p.getY()))
+					&& (p.getX() < (points[j].getX() - points[i].getX()) * (p.getY() - points[i].getY())
+							/ (points[j].getY() - points[i].getY()) + points[i].getX()))
+				intersecting = !intersecting;
+		}
+
+		return intersecting;
 	}
 }

@@ -1,12 +1,11 @@
 package ui.graphics;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
 import ui.space.Point;
+import ui.style.TextStyle;
 
-public class Text extends Figure {
+public class Text extends Scalable {
 
 	// geometric properties
 	private Point pos;
@@ -29,30 +28,36 @@ public class Text extends Figure {
 		this.text = text;
 	}
 
-	public Text(String text, Point pos, Font font, double size, Color color) {
-		super(new Style(color, font, size));
+	// style
+	private TextStyle txtStyle;
 
-		this.text = text;
-		this.pos = pos;
+	public TextStyle getTextStyle() {
+		return this.txtStyle;
 	}
 
-	public Text(String text, Point pos, Font font, Color color) {
-		super(new Style(color, font));
+	public void setTextStyle(TextStyle txtStyle) {
+		this.txtStyle = txtStyle;
+	}
+
+	public Text(String text, Point pos, TextStyle txtStyle, int scale) {
+		super(scale);
 
 		this.text = text;
+
 		this.pos = pos;
+		setTextStyle(txtStyle);
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setFont(getStyle().getFont().deriveFont(getStyle().getFont().getSize() * getScale()));
-		g.setColor(getStyle().getBgClr());
+		g.setFont(txtStyle.getFont().deriveFont((float) (txtStyle.getFont().getSize() * getScale())));
+		g.setColor(txtStyle.getClr());
 
 		g.drawString(text, (int) pos.getX() * getScale(), (int) pos.getY() * getScale());
 	}
 
 	@Override
-	public boolean isPointInFigureBounds(Point p) {
+	public boolean isPointInBounds(Point p) {
 		// TODO Auto-generated method stub
 		return false;
 	}

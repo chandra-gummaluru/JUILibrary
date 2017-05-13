@@ -1,5 +1,8 @@
 package ui.components;
 
-public abstract class Component {
+import handlers.input.InputHandling;
+import ui.graphics.Drawable;
+
+public abstract class Component implements InputHandling, Drawable {
 
 }

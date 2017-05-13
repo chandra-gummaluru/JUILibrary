@@ -1,10 +1,10 @@
 package ui.graphics;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ui.space.Point;
 import ui.space.Vector;
+import ui.style.ColorStyle;
 
 public class Circle extends Shape {
 
@@ -15,19 +15,19 @@ public class Circle extends Shape {
 		return this.radius;
 	}
 
-	public Circle(Point pos, int radius, Color bgColor, Color fgColor) {
-		super(pos, bgColor, fgColor);
+	public Circle(Point pos, int radius, ColorStyle clrStyle, int scale) {
+		super(pos, clrStyle, scale);
 
 		this.radius = radius;
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(this.getStyle().getBgClr());
+		g.setColor(this.getClrStyle().getBgClr());
 		g.fillOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(),
 				radius * getScale(), radius * getScale());
 
-		g.setColor(this.getStyle().getFgClr());
+		g.setColor(this.getClrStyle().getFgClr());
 		g.drawOval((int) getCentroid().getX() * getScale(), (int) getCentroid().getY() * getScale(),
 				radius * getScale(), radius * getScale());
 	}
@@ -47,7 +47,7 @@ public class Circle extends Shape {
 	}
 
 	@Override
-	public boolean isPointInFigureBounds(Point p) {
+	public boolean isPointInBounds(Point p) {
 		double dx = p.getX() - this.getCentroid().getX();
 		double dy = p.getY() - this.getCentroid().getY();
 

@@ -1,6 +1,5 @@
 package handlers.input;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -8,25 +7,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.HashMap;
+
+import ui.space.Point;
 
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
-	public enum KeyBinding {
-		W(87), A(65), S(83), D(68);
-		
-		private int val;
-		
-		KeyBinding (int val) {
-			this.val = val;
-		}
-		
-		public int getVal() {
-			return this.val;
-		}
-	}
-	
-	private HashMap<Integer, Boolean> keys;
+	public static final int NULL_CHAR = 0;
+	public static final int BACKSPACE = KeyEvent.VK_BACK_SPACE;
+
+	private char lastKeyPressed;
 
 	private boolean pointerDown;
 	private Point pointerPos;
@@ -35,12 +24,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	private int wheelClickCount;
 
 	public InputHandler() {
-		keys = new HashMap<Integer, Boolean>();
-		
-		for (KeyBinding k : KeyBinding.values()) {
-			keys.put(k.getVal(), false);
-		}
-		
+		lastKeyPressed = NULL_CHAR;
 
 		pointerPos = new Point(0, 0);
 
@@ -49,12 +33,8 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		wheelClickCount = 0;
 	}
 
-	public boolean isKeyPressed(KeyBinding keyBinding) {
-		return keys.get(keyBinding.getVal());
-	}
-
 	public boolean isKeyPressed(int keyNumber) {
-		return keys.get(keyNumber);
+		return keyNumber == lastKeyPressed;
 	}
 
 	public boolean isPointerDown() {
@@ -75,19 +55,21 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// do nothing...
+		lastKeyPressed = e.getKeyChar();
+	}
+
+	public char getLastKey() {
+		return this.lastKeyPressed;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// this key is being pressed.
-		keys.put(e.getKeyCode(), true);
+		// do nothing.
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// this key is no longer being pressed.
-		keys.put(e.getKeyCode(), false);
+		lastKeyPressed = NULL_CHAR;
 	}
 
 	@Override

@@ -14,9 +14,10 @@ import loop.Tickable;
 import states.State;
 import states.StateHandler;
 import ui.display.Window.Scalability;
-import ui.graphics.Polygon;
 
 public class Application implements Tickable {
+
+	public int scale;
 
 	private String name;
 
@@ -57,14 +58,13 @@ public class Application implements Tickable {
 		// construct the window.
 		this.window = new Window(name, size, scalability, Color.WHITE);
 
+		scale = this.window.getScale();
+
 		// add the required listeners to the window.
 		this.window.addKeyListener(inputHldr);
 		this.window.addMouseListener(inputHldr);
 		this.window.addMouseMotionListener(inputHldr);
 		this.window.addMouseWheelListener(inputHldr);
-
-		// set the scale of all interface objects.
-		Polygon.setScale(getWindow().getScale());
 
 		stateHdlr = new StateHandler();
 
@@ -112,5 +112,9 @@ public class Application implements Tickable {
 
 	public StateHandler getStateManager() {
 		return this.stateHdlr;
+	}
+
+	public int getScale() {
+		return this.scale;
 	}
 }
